@@ -47,12 +47,7 @@ namespace CollectionTest.Collection
                     length++;
             }
 
-            var array = new T[length];
-
-            for (int i = 0; i < length; i++)
-                array[i] = base[i + fromIndex];
-
-            return array;
+            return this.Skip(fromIndex).Take(length);
         }
 
         private int GetIndex(int date)
