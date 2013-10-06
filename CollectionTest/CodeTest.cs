@@ -46,6 +46,24 @@ namespace CollectionTest
         }
 
         [Test]
+        public void SortedIndexArrayRight()
+        {
+            //Arrange
+            var array = new SortedIndexedArray<Dog>
+                {
+                    new Dog {Date = 3},
+                    new Dog {Date = 7},
+                    new Dog {Date = 9},
+                    new Dog {Date = 12}
+                };
+
+            //Assert
+            Assert.That(array.Right(3).Date, Is.EqualTo(7));
+            Assert.That(array.Right(4).Date, Is.EqualTo(7));
+            Assert.That(array.Right(12), Is.Null);
+        }
+
+        [Test]
         public void C5TestRangeFromTo()
         {
             //Arrange
@@ -69,6 +87,25 @@ namespace CollectionTest
         {
             //Arrange
             var array = new DatedSortedSet<Dog>
+                {
+                    new Dog {Date = 3},
+                    new Dog {Date = 7},
+                    new Dog {Date = 9},
+                    new Dog {Date = 12}
+                };
+
+            //Assert
+            array.RangeFromTo(2, 9).Select(x => x.Date).Should().Equal(new[] { 3, 7, 9 });
+            array.RangeFromTo(2, 8).Select(x => x.Date).Should().Equal(new[] { 3, 7 });
+            array.RangeFromTo(7, 13).Select(x => x.Date).Should().Equal(new[] { 7, 9, 12 });
+            array.RangeFromTo(13, 14).Count().Should().Be(0);
+        }
+
+        [Test]
+        public void SortedIndexedArrayRangeFromTo()
+        {
+            //Arrange
+            var array = new SortedIndexedArray<Dog>
                 {
                     new Dog {Date = 3},
                     new Dog {Date = 7},
