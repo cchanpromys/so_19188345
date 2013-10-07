@@ -83,18 +83,8 @@ namespace CollectionTest.Collection
         {
             base.Add(obj);
 
-            //int index = 0;
-            //if(indexer.Count > 0)
-            //    index = indexer.Last() + 1;
-
-            //var length = obj.Date + 1 - indexer.Count;
-
-            //var array = new int[length];
-
-            //for (int i = 0; i < length; i++)
-            //    array[i] = index;
-
-            //indexer.AddRange(array);
+            if(indexer != null)
+                throw new NotSupportedException("You need to figure out how to rebuild the index.");
         }
 
         public new void AddRange(IEnumerable<T> collection)
