@@ -2,16 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using CollectionTest.Model;
+using ProtoBuf;
 
 namespace CollectionTest.Collection
 {
     public class SortedIndexedArray<T>: List<T> where T : IDated
     {
-        private readonly List<int> indexer;
+        private int[] indexer;
 
         public SortedIndexedArray()
         {
-            indexer = new List<int>();
+            indexer = new int[10];
+        }
+
+        public void BuildIndex()
+        {
+            var length = base[Count - 1].Date;
+            indexer = new int[length];
+
+            var num = 0;
+            var last = base[0].Date;
+            
+            for (int i = 0; i < length; i++)
+            {
+                if (i >= last)
+                {
+                    num++;
+                    last = base[num].Date;
+                }
+
+                indexer[i] = num;
+            }
         }
 
         public T Right(int date)
@@ -52,7 +73,7 @@ namespace CollectionTest.Collection
 
         private int GetIndex(int date)
         {
-            if (date > indexer.Count - 1)
+            if (date > indexer.Length - 1)
                 return -1;
 
             return indexer[date];
@@ -62,18 +83,18 @@ namespace CollectionTest.Collection
         {
             base.Add(obj);
 
-            int index = 0;
-            if(indexer.Count > 0)
-                index = indexer.Last() + 1;
+            //int index = 0;
+            //if(indexer.Count > 0)
+            //    index = indexer.Last() + 1;
 
-            var length = obj.Date + 1 - indexer.Count;
+            //var length = obj.Date + 1 - indexer.Count;
 
-            var array = new int[length];
+            //var array = new int[length];
 
-            for (int i = 0; i < length; i++)
-                array[i] = index;
+            //for (int i = 0; i < length; i++)
+            //    array[i] = index;
 
-            indexer.AddRange(array);
+            //indexer.AddRange(array);
         }
 
         public new void AddRange(IEnumerable<T> collection)
