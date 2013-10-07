@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using CollectionTest.Model;
-using ProtoBuf;
 
 namespace CollectionTest.Collection
 {
     public class SortedIndexedArray<T>: List<T> where T : IDated
     {
         private int[] indexer;
-
-        public SortedIndexedArray()
-        {
-            indexer = new int[10];
-        }
 
         public void BuildIndex()
         {
@@ -33,6 +27,36 @@ namespace CollectionTest.Collection
 
                 indexer[i] = num;
             }
+        }
+
+        public void AddToIndex()
+        {
+            if (indexer == null || indexer.Count() <= 1)
+            {
+                BuildIndex();
+                return;
+            }
+
+            var lastIndex = indexer[indexer.Length - 1];
+            var index = indexer.Length;
+            if (Count - 1 == indexer[indexer.Length - 1]) //indexer is not dirty
+                return;
+
+            var newIndexer = new int[base[Count - 1].Date];
+            Array.Copy(indexer, newIndexer, indexer.Length);
+
+            while(index < base[Count - 1].Date)
+            {
+                for (int j = 0; j < base[lastIndex + 1].Date - base[lastIndex].Date; j++)
+                {
+                    newIndexer[index] = lastIndex + 1;
+                    index++;
+                }
+
+                lastIndex++;
+            }
+
+            indexer = newIndexer;
         }
 
         public T Right(int date)
@@ -84,7 +108,7 @@ namespace CollectionTest.Collection
             base.Add(obj);
 
             if(indexer != null)
-                throw new NotSupportedException("You need to figure out how to rebuild the index.");
+                AddToIndex();
         }
 
         public new void AddRange(IEnumerable<T> collection)

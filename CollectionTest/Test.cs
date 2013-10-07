@@ -21,21 +21,21 @@ namespace CollectionTest
         {
             Assert.Fail(@"The test will write to 'C:\SO_Question_Protobuf\'. Please remove after testing.");
 
-            p1 = new CrazyPerson1 {Id = "cp1", Dogs = new DatedC5SortedArray<Dog>()};
-            p2 = new CrazyPerson2 {Id = "cp2", Dogs = new DatedSortedSet<Dog>()};
-            p3 = new CrazyPerson3 {Id = "cp3", Dogs = new SortedIndexedArray<Dog>()};
+            //p1 = new CrazyPerson1 {Id = "cp1", Dogs = new DatedC5SortedArray<Dog>()};
+            //p2 = new CrazyPerson2 {Id = "cp2", Dogs = new DatedSortedSet<Dog>()};
+            //p3 = new CrazyPerson3 {Id = "cp3", Dogs = new SortedIndexedArray<Dog>()};
 
-            for (int i = 0; i < 500000; i++)
-            {
-                p1.Dogs.Add(new Dog {Date = i + 3000, Name = i.ToString()});
-                p2.Dogs.Add(new Dog {Date = i + 3000, Name = i.ToString()});
-                p3.Dogs.Add(new Dog {Date = i + 3000, Name = i.ToString()});
-            }
+            //for (int i = 0; i < 500000; i++)
+            //{
+            //    p1.Dogs.Add(new Dog {Date = i + 3000, Name = i.ToString()});
+            //    p2.Dogs.Add(new Dog {Date = i + 3000, Name = i.ToString()});
+            //    p3.Dogs.Add(new Dog {Date = i + 3000, Name = i.ToString()});
+            //}
 
-            store = new ProtobufStore();
-            store.Store(p1);
-            store.Store(p2);
-            store.Store(p3);
+            //store = new ProtobufStore();
+            //store.Store(p1);
+            //store.Store(p2);
+            //store.Store(p3);
         }
 
         [Test]

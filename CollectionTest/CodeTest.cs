@@ -123,5 +123,32 @@ namespace CollectionTest
             array.RangeFromTo(7, 13).Select(x => x.Date).Should().Equal(new[] { 7, 9, 12 });
             array.RangeFromTo(13, 14).Count().Should().Be(0);
         }
+
+
+        [Test]
+        public void AddToIndex()
+        {
+            //Arrange
+            var array = new SortedIndexedArray<Dog>
+                {
+                    new Dog {Date = 3},
+                    new Dog {Date = 7},
+                    new Dog {Date = 9},
+                    new Dog {Date = 12}
+                };
+
+            array.BuildIndex();
+
+            array.Add(new Dog {Date = 15});
+            array.Add(new Dog {Date = 16});
+            array.Add(new Dog {Date = 30});
+
+            //Assert
+            array.RangeFromTo(2, 9).Select(x => x.Date).Should().Equal(new[] {3, 7, 9});
+            array.RangeFromTo(2, 8).Select(x => x.Date).Should().Equal(new[] {3, 7});
+            array.RangeFromTo(7, 13).Select(x => x.Date).Should().Equal(new[] {7, 9, 12});
+            array.RangeFromTo(7, 15).Select(x => x.Date).Should().Equal(new[] {7, 9, 12, 15});
+            array.RangeFromTo(31, 40).Count().Should().Be(0);
+        }
     }
 }
