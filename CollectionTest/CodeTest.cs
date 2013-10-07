@@ -57,6 +57,8 @@ namespace CollectionTest
                     new Dog {Date = 12}
                 };
 
+            array.BuildIndex();
+
             //Assert
             Assert.That(array.Right(3).Date, Is.EqualTo(7));
             Assert.That(array.Right(4).Date, Is.EqualTo(7));
@@ -112,6 +114,8 @@ namespace CollectionTest
                     new Dog {Date = 9},
                     new Dog {Date = 12}
                 };
+
+            array.BuildIndex();
 
             //Assert
             array.RangeFromTo(2, 9).Select(x => x.Date).Should().Equal(new[] { 3, 7, 9 });
